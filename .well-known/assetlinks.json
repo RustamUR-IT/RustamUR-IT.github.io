@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.rustam.emom",
+    "sha256_cert_fingerprints": ["AD:33:57:30:F3:F3:C4:EF:5A:40:47:E4:E6:AF:CC:6D:0F:AE:C9:38:DF:14:B9:03:1D:D3:0A:EC:7A:82:6E:86"]
+  }
+}]

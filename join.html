@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Join the guild · rustams ting</title>
+<meta property="og:title" content="Join my guild in rustams ting">
+<meta property="og:description" content="A fitness app in the style of a System: daily quests, levels, weekly bosses, a small guild.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <p class="sys">[ SYSTEM ]</p>
+  <h1 id="head">GUILD INVITE</h1>
+  <div class="card">
+    <div id="who" class="hide">
+      <p class="name" id="name"></p>
+      <p class="meta" id="meta"></p>
+      <p class="guild hide" id="guild"></p>
+      <div class="stats">
+        <div><b id="power">–</b>POWER</div>
+        <div><b id="week">–</b>XP THIS WEEK</div>
+        <div><b id="streak">–</b>DAY STREAK</div>
+      </div>
+    </div>
+    <p id="none" class="note hide">This link has no hunter card in it. Ask your friend to send it again.</p>
+
+    <a id="open" class="btn hide" href="#">OPEN IN THE APP</a>
+    <button id="copy" class="btn ghost hide" type="button">Copy the code</button>
+    <p id="noapp" class="note warn hide">The app isn't installed on this phone yet.</p>
+    <p class="note" id="how">Have the app? Tap <b>Open in the app</b>, or copy the code and paste it in <b>STATUS → Guild → Paste code or link</b>.</p>
+    <p class="note">Don't have it yet? <b>rustams ting</b> is coming to Google Play soon.</p>
+  </div>
+  <footer>The card travels in the part of the link after “#”. It never reaches this page's server, and nothing here is tracked.<br><a href="privacy.html" style="color:inherit">Privacy</a> · <a href="terms.html" style="color:inherit">Terms</a> · <a href="imprint.html" style="color:inherit">Imprint</a></footer>
+</main>
+<script>
+(function () {
+  var code = (location.hash || "").replace(/^#/, "");
+  try { code = decodeURIComponent(code); } catch (e) {}
+  var m = code.match(/RT1:[A-Za-z0-9_-]{10,}/);
+  var $ = function (id) { return document.getElementById(id); };
+  var show = function (id) { $(id).classList.remove("hide"); };
+  if (/[?&]noapp\b/.test(location.search)) show("noapp");
+  if (!m) { show("none"); $("how").classList.add("hide"); return; }
+  code = m[0];
+
+  // open: Android gets an intent link straight into the app, others the app's own scheme
+  var back = location.origin + location.pathname + "?noapp" + "#" + code;
+  var android = /Android/i.test(navigator.userAgent);
+  $("open").href = android
+    ? "intent://join/" + code + "#Intent;scheme=rustamsting;package=com.rustam.emom;S.browser_fallback_url=" + encodeURIComponent(back) + ";end"
+    : "rustamsting://join/" + code;
+  show("open");
+
+  $("copy").onclick = function () {
+    var done = function () { $("copy").textContent = "Copied ✓"; };
+    if (navigator.clipboard) navigator.clipboard.writeText(code).then(done, function () { prompt("Copy the code:", code); });
+    else prompt("Copy the code:", code);
+  };
+  show("copy");
+
+  // show who invited you (the card is zlib-deflated JSON in base64url)
+  if (!window.DecompressionStream) return;
+  var b64 = code.slice(4).replace(/-/g, "+").replace(/_/g, "/");
+  while (b64.length % 4) b64 += "=";
+  var bytes;
+  try { bytes = Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); }); } catch (e) { return; }
+  var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate"));
+  new Response(stream).text().then(function (t) {
+    var c = JSON.parse(t);
+    var power = 0; for (var k in (c.s || {})) power += +c.s[k] || 0;
+    $("name").textContent = String(c.n || "Hunter").toUpperCase();
+    $("meta").textContent = "LV. " + (c.l | 0) + " · " + String(c.t || "").toUpperCase() + (c.d ? " · " + String(c.d).toUpperCase() : "");
+    $("power").textContent = power.toLocaleString("de-DE");
+    $("week").textContent = (c.x | 0).toLocaleString("de-DE");
+    $("streak").textContent = c.k | 0;
+    if (c.gn) { $("guild").textContent = "⚔ GUILD " + String(c.gn).toUpperCase(); show("guild"); $("head").textContent = "JOIN THE GUILD"; }
+    document.title = (c.n || "Hunter") + " invited you · rustams ting";
+    show("who");
+  }).catch(function () {});
+})();
+</script>
+</body>
+</html>
