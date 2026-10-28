@@ -2,20 +2,634 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Veilrise</title>
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Veilrise · Claim your Awakening</title>
+<meta name="description" content="Veilrise turns training, food, sleep and study into a game. One quest a day, real stats, a rank from E to S you earn. Join the waitlist and get the Founder badge.">
+<meta name="theme-color" content="#06080c">
+<link rel="canonical" href="https://rustamur-it.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veilrise">
+<meta property="og:title" content="Veilrise · What rank are you?">
+<meta property="og:description" content="Your real life as a game. Train, eat, sleep and study. The System keeps score. Join the waitlist.">
+<meta property="og:url" content="https://rustamur-it.github.io/">
+<meta property="og:image" content="https://rustamur-it.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Veilrise: a glowing gold S rank and the line Ascension Trial complete">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://rustamur-it.github.io/og.png">
+<style>
+:root{--bg:#06080c;--bg2:#080b10;--panel:#0b1118;--line:#1a2734;--edge:#3a4d61;--fg:#e4ecf5;--soft:#c3cfdc;--muted:#97a6b8;--pull:#52d9ff;--dip:#9d7bff;--gold:#f2c14e;--rest:#4be3b0;--warn:#ff4d6d;
+--mono:"Roboto Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;--sans:system-ui,-apple-system,Roboto,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden}
+a{color:var(--pull)}a:hover{color:#9be9ff}
+:focus-visible{outline:2px solid var(--pull);outline-offset:3px}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono)}
+.tag{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--pull)}
+h1,h2,h3{margin:0}
+.h2{font-size:clamp(32px,4.4vw,56px);line-height:1.06;font-weight:800;letter-spacing:-1px}
+.lead{margin:0;font-size:clamp(17px,1.7vw,19px);line-height:1.6;color:var(--muted)}
+.muted{color:var(--muted)}
+section{border-bottom:1px solid var(--line)}
+.sec{padding-top:120px;padding-bottom:120px}
+.stack{display:flex;flex-direction:column}
+.row{display:flex;flex-wrap:wrap}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.win{position:relative;background:linear-gradient(#0f1822,#0b1118);border:1px solid #1f3a4a;border-radius:4px;--c:var(--pull)}
+.br{position:absolute;width:14px;height:14px;border:0 solid var(--c)}
+.br.tl{top:-1px;left:-1px;border-top-width:2px;border-left-width:2px}
+.br.tr{top:-1px;right:-1px;border-top-width:2px;border-right-width:2px}
+.br.bl{bottom:-1px;left:-1px;border-bottom-width:2px;border-left-width:2px}
+.br.bc{bottom:-1px;right:-1px;border-bottom-width:2px;border-right-width:2px}
+.meter{height:6px;background:var(--line);border-radius:1px;overflow:hidden}
+.meter i{display:block;height:6px;background:var(--pull);border-radius:1px;transform-origin:left}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 24px;border:0;border-radius:6px;background:var(--pull);color:var(--bg);font-family:var(--mono);font-size:15px;font-weight:800;letter-spacing:3px;text-decoration:none;cursor:pointer}
+.btn:hover{color:var(--bg);filter:brightness(1.08)}
+.lbl{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted)}
+
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:rgba(6,8,12,.94);border-bottom:1px solid var(--line);backdrop-filter:blur(6px)}
+header.top nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--fg);text-decoration:none;min-height:48px;font-family:var(--mono);font-weight:800;font-size:17px;letter-spacing:6px}
+.brand b{color:var(--pull);font-weight:400;letter-spacing:0}
+.navlinks{display:flex;align-items:center;gap:24px}
+.navlinks a.l{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--muted);text-decoration:none;padding:14px 0}
+.navlinks .btn{min-height:44px;font-size:12px;letter-spacing:2px;padding:0 16px;white-space:nowrap}
+
+/* hero */
+.grid-bg{background-image:linear-gradient(#0d141d 1px,transparent 1px),linear-gradient(90deg,#0d141d 1px,transparent 1px);background-size:48px 48px}
+.hero{padding-top:88px;padding-bottom:112px}
+.hero .row{align-items:center;gap:64px}
+.hero h1{font-size:clamp(40px,5.6vw,72px);line-height:1.04;font-weight:800;letter-spacing:-1.5px}
+.hero h1 span{color:var(--pull)}
+.phone{width:330px;max-width:100%;padding:13px;background:#000;border:1px solid #263646;border-radius:40px;margin:0}
+.phone .scr{background:var(--bg);border-radius:28px;overflow:hidden}
+
+/* waitlist */
+.wl{display:flex;flex-direction:column;gap:10px;width:100%;max-width:560px}
+.wl .f{display:flex;flex-wrap:wrap;gap:10px}
+.wl input[type=email]{flex:1 1 240px;min-width:0;min-height:56px;padding:0 16px;background:var(--panel);border:1px solid var(--edge);border-radius:6px;color:var(--fg);font-size:16px;font-family:var(--sans)}
+.wl input::placeholder{color:#6f7f92}
+.wl .btn{flex:1 0 auto}
+.wl .err{margin:0;font-size:14px;color:var(--warn)}
+.wl .fine{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+.founder{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid #5a4a22;border-radius:3px;background:rgba(242,193,78,.06);font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--gold);align-self:flex-start}
+.done{max-width:560px;padding:18px 20px;background:var(--panel);border:1px solid var(--rest);border-radius:6px;display:flex;flex-direction:column;gap:10px}
+.done .t{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--rest)}
+.done p{margin:0}
+.ghost{min-height:48px;padding:0 16px;background:transparent;color:var(--pull);border:1px solid var(--edge);border-radius:3px;font-family:var(--mono);font-size:13px;font-weight:700;cursor:pointer;align-self:flex-start}
+[hidden]{display:none!important}
+
+/* manhwa */
+.panel{position:relative;margin:0;flex:1 1 340px;max-width:520px;aspect-ratio:4/5;overflow:hidden;background:#efefea;border:3px solid var(--fg);box-shadow:0 0 0 1px #000,0 30px 80px rgba(0,0,0,.6)}
+.panel .lines{position:absolute;inset:0;background:repeating-conic-gradient(from 0deg at 50% 54%,#111 0deg .8deg,transparent .8deg 4.6deg)}
+.panel .clear{position:absolute;inset:0;background:radial-gradient(circle at 50% 54%,#efefea 0 24%,rgba(239,239,234,0) 64%)}
+.panel svg{position:absolute;inset:0;width:100%;height:100%}
+.sysbox{position:absolute;top:6%;left:7%;right:7%;padding:16px 18px;background:rgba(6,8,12,.94);border:1px solid var(--pull);box-shadow:0 0 28px rgba(82,217,255,.45),inset 0 0 18px rgba(82,217,255,.12);display:flex;flex-direction:column;gap:8px;text-align:center;--c:var(--pull)}
+.sysbox .br{width:14px;height:14px}
+.caption{position:absolute;left:5%;bottom:5%;padding:8px 12px;background:#fff;border:2px solid #000;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:clamp(13px,1.5vw,16px);color:#000}
+.tests li{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 18px}
+
+/* features */
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.feat article{padding:26px 22px;display:flex;flex-direction:column;gap:10px}
+.feat h3{font-size:19px}
+.feat p{margin:0;font-size:15px;line-height:1.6;color:var(--muted)}
+
+/* logger */
+.setrow{display:flex;justify-content:space-between;padding:10px 14px;border:1px solid var(--line);border-radius:6px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.setrow.d{color:var(--rest)}
+.setrow.n{border-color:var(--pull);color:var(--fg)}
+.path li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:14px;align-items:center;min-height:52px}
+.dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px}
+.link{width:2px;height:14px;margin-left:13px}
+
+/* fair */
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.week div{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 0;border:1px solid var(--line);border-radius:4px;font-size:11px;color:var(--muted)}
+.week div.ill{border-color:var(--dip);background:rgba(157,123,255,.08);color:#c9b8ff}
+.big{font-family:var(--mono);font-size:clamp(44px,6vw,64px);line-height:1;font-weight:700}
+
+/* boss */
+.boss{background:radial-gradient(ellipse at 30% 50%,#24070e 0%,#0a0507 55%,var(--bg) 100%);border-bottom-color:#2a1218;overflow:hidden}
+.hp{font-family:var(--mono);font-size:clamp(26px,4vw,40px);line-height:1;letter-spacing:2px;white-space:nowrap;overflow:hidden}
+
+/* ascension */
+.asc{background:radial-gradient(ellipse at 50% 30%,rgba(242,193,78,.10),transparent 60%),var(--bg);overflow:hidden}
+.S{font-family:var(--mono);font-size:clamp(180px,26vw,340px);line-height:.9;font-weight:800;background:linear-gradient(170deg,#52d9ff 0%,#9be9ff 28%,#f2c14e 62%,#f7d98a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 36px rgba(242,193,78,.35))}
+.ladder{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;width:100%;max-width:480px}
+.ladder span{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border:1px solid var(--pull);border-radius:4px;font-family:var(--mono);font-size:22px;color:var(--pull)}
+.ladder span.s{border-color:var(--gold);color:var(--gold);box-shadow:0 0 22px rgba(242,193,78,.4)}
+.chk{display:flex;justify-content:space-between;font-size:14px}
+
+/* sticky mobile CTA */
+.sticky{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(6,8,12,.96);border-top:1px solid var(--line);display:none;transform:translateY(110%);transition:transform .3s ease}
+.sticky.show{transform:none}
+.sticky .btn{width:100%;min-height:52px}
+
+/* motion */
+@keyframes in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes brk{from{opacity:0;transform:scale(2.4)}to{opacity:1;transform:none}}
+@keyframes fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes lit{from{color:#2b3a4a;border-color:var(--line);box-shadow:none}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+.js .rv{opacity:0}
+.js .rv.on{animation:in .9s ease-out both}
+.js .rv .br,.js .rv.br{opacity:0}
+.js .on .br,.js .br.on{animation:brk .7s cubic-bezier(.2,.8,.2,1) .15s both}
+.js .rv .meter i{transform:scaleX(0)}
+.js .on .meter i{animation:fill 1.6s cubic-bezier(.2,.8,.2,1) .2s both}
+.js .ladder span{color:#2b3a4a;border-color:var(--line)}
+.js .on .ladder span{animation:lit .5s ease-out both;color:var(--pull);border-color:var(--pull)}
+.js .on .ladder span.s{color:var(--gold);border-color:var(--gold)}
+.float{animation:float 7s ease-in-out infinite}
+.pulse{animation:pulse 3.4s ease-in-out infinite}
+.blink{animation:blink 1.1s steps(1) infinite}
+@media (prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+.float,.pulse,.blink,.js .rv.on,.js .on .br,.js .on .meter i,.js .on .ladder span{animation:none!important}
+.js .rv,.js .rv .br,.js .br{opacity:1}
+.js .rv .meter i{transform:none}
+.js .ladder span{color:var(--pull);border-color:var(--pull)}
+.js .ladder span.s{color:var(--gold);border-color:var(--gold)}
+.sticky{transition:none}
+}
+
+/* phone first */
+@media (max-width:760px){
+.navlinks a.l{display:none}
+.sec{padding-top:72px!important;padding-bottom:72px!important}
+.hero{padding-top:36px;padding-bottom:64px}
+.hero .row{gap:44px}
+.sticky{display:block}
+footer.foot{padding-bottom:96px!important}
+.m-hide{display:none!important}
+.feat{grid-template-columns:1fr;gap:8px}
+.feat article{padding:16px 18px;gap:4px}
+.feat p.d{display:none}
+.priv li .d{display:none}
+.panel{max-width:none}
+}
+</style>
 </head>
 <body>
+
+<header class="top">
+<nav class="wrap" aria-label="Main">
+<a class="brand" href="./"><b aria-hidden="true">◇</b>VEILRISE</a>
+<div class="navlinks">
+<a class="l" href="#awakening">AWAKENING</a>
+<a class="l" href="#boss">BOSSES</a>
+<a class="l" href="#ascension">RANKS</a>
+<a class="l" href="support.html">SUPPORT</a>
+<a class="btn" href="#join">JOIN WAITLIST</a>
+</div>
+</nav>
+</header>
+
 <main>
-  <p class="sys">[ SYSTEM ]</p>
-  <h1>VEILRISE</h1>
-  <div class="card">
-    <p class="name">ARISE.</p>
-    <p class="note">A fitness app in the style of a System: daily quests, levels and stats from your real training, weekly bosses, and a small guild with your friends.</p>
-    <p class="note warn">Coming to Google Play soon.</p>
-  </div>
-  <footer><a href="privacy.html" style="color:inherit">Privacy</a> · <a href="terms.html" style="color:inherit">Terms</a> · <a href="imprint.html" style="color:inherit">Imprint</a></footer>
+<!-- HERO -->
+<section class="grid-bg" id="top" style="overflow:hidden">
+<div class="wrap hero">
+<div class="row">
+<div class="stack" style="flex:999 1 500px;min-width:0;gap:26px">
+<p class="tag">[ SYSTEM ] A NEW PLAYER HAS BEEN DETECTED<span class="blink" aria-hidden="true">_</span></p>
+<h1>Train, eat, sleep and study.<br><span>The System keeps score.</span></h1>
+<p class="lead" style="max-width:560px">Veilrise turns your real life into a game. One clear quest a day, real stats from what you actually did, and a rank from E to S that you earn. On your phone, without an account.</p>
+<div data-wl="top"></div>
+</div>
+<div style="flex:1 1 320px;display:flex;justify-content:center;position:relative">
+<div aria-hidden="true" class="pulse" style="position:absolute;inset:6% -10%;background:radial-gradient(closest-side,rgba(82,217,255,.18),transparent);pointer-events:none"></div>
+<div class="float" style="width:330px;max-width:100%">
+<figure class="phone rv" role="img" aria-label="Veilrise home screen: today's primary quest, weighted pull-ups, with a Begin Quest button and today's overview">
+<div class="scr">
+<div class="mono" style="display:flex;align-items:center;justify-content:space-between;padding:22px 18px 12px">
+<span style="font-size:15px;font-weight:700;letter-spacing:2px"><span style="color:var(--pull)">◇</span> SYSTEM</span>
+<span style="font-size:11px;color:var(--muted);display:flex;gap:12px"><span>B · LV. 34</span><span>+</span><span>⚙</span><span>?</span></span>
+</div>
+<div class="stack" style="padding:0 12px 12px;gap:10px">
+<div class="win stack" style="--c:var(--gold);padding:16px;gap:8px;box-shadow:0 0 24px rgba(242,193,78,.10)">
+<i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br bc"></i>
+<span class="mono" style="font-size:10px;letter-spacing:3px;color:var(--gold)">[ TODAY'S PRIMARY QUEST ]</span>
+<span style="font-size:20px;font-weight:700">Weighted pull-up</span>
+<span class="mono" style="font-size:15px;color:var(--pull)">+25 kg × 3–5 · 3 sets</span>
+<span style="font-size:12px;color:var(--muted)">Pull Day · 5 exercises · readiness 82 ✓</span>
+<span class="mono" style="font-size:11px;letter-spacing:2px;color:var(--gold)">REWARD +42 STR XP</span>
+<div class="mono" style="margin-top:4px;min-height:48px;background:var(--gold);color:var(--bg);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;letter-spacing:3px">BEGIN QUEST</div>
+</div>
+<div class="card stack" style="padding:14px 16px;gap:10px">
+<span class="mono" style="font-size:10px;letter-spacing:2px;color:var(--muted)">◇ TODAY</span>
+<div style="display:flex;justify-content:space-between;font-size:13px"><span class="muted">TRAIN</span><span>Pull Day · 17:30</span></div>
+<div class="stack" style="gap:5px"><div style="display:flex;justify-content:space-between;font-size:13px"><span class="muted">FUEL</span><span>~1 240 kcal left</span></div><div class="meter"><i style="width:54%"></i></div></div>
+<div style="display:flex;justify-content:space-between;font-size:13px"><span class="muted">SLEEP</span><span>lights-out 23:15</span></div>
+<div style="display:flex;justify-content:space-between;font-size:13px"><span class="muted">QUESTS</span><span>5/8 · <span style="color:var(--rest)">streak 12 ✓</span></span></div>
+</div>
+</div>
+<div class="mono" style="display:flex;justify-content:space-around;padding:12px 6px 18px;border-top:1px solid var(--line);font-size:9px;letter-spacing:1px;color:var(--muted)">
+<span style="color:var(--pull)">SYSTEM</span><span>TRAIN</span><span>FUEL</span><span>STATUS</span><span>GROW</span>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 01 AWAKENING -->
+<section id="awakening">
+<div class="wrap sec row" style="align-items:center;gap:56px 72px">
+<figure class="panel rv" role="img" aria-label="Black and white manhwa panel: a young man in shadow with glowing eyes. A System window asks if he accepts becoming a Player.">
+<div class="lines" aria-hidden="true"></div><div class="clear" aria-hidden="true"></div>
+<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<defs><filter id="eg" x="-200%" y="-300%" width="500%" height="700%"><feGaussianBlur stdDeviation="5"/></filter></defs>
+<path d="M40 500 C52 430 108 398 166 386 L178 352 L222 352 L234 386 C292 398 348 430 360 500 Z" fill="#0a0a0a"/>
+<ellipse cx="200" cy="300" rx="50" ry="62" fill="#0a0a0a"/>
+<path d="M146 312 L140 262 L158 272 L156 228 L180 252 L192 208 L208 246 L230 214 L236 254 L258 240 L254 312 L240 286 L224 300 L208 280 L192 302 L176 282 L160 300 Z" fill="#0a0a0a"/>
+<g filter="url(#eg)"><polygon points="166,304 194,309 190,316 170,313" fill="#52d9ff"/><polygon points="206,309 234,304 230,313 210,316" fill="#52d9ff"/></g>
+<polygon points="166,304 194,309 190,316 170,313" fill="#eafcff"/><polygon points="206,309 234,304 230,313 210,316" fill="#eafcff"/>
+<g fill="none" stroke="#f4f4f0" stroke-width="1.6" stroke-linecap="round" opacity=".85">
+<path d="M164 330 Q200 372 236 330"/><path d="M150 404 Q176 412 197 406"/><path d="M203 406 Q224 412 250 404"/><path d="M146 446 Q200 470 254 446"/><path d="M200 412 L200 500"/><path d="M168 388 Q132 398 100 424"/><path d="M232 388 Q268 398 300 424"/><path d="M96 470 Q104 446 120 434"/><path d="M304 470 Q296 446 280 434"/>
+</g>
+</svg>
+<div class="sysbox">
+<i class="br tl" style="top:-4px;left:-4px"></i><i class="br tr" style="top:-4px;right:-4px"></i><i class="br bl" style="bottom:-4px;left:-4px"></i><i class="br bc" style="bottom:-4px;right:-4px"></i>
+<span class="mono" style="font-size:11px;letter-spacing:3px;color:var(--pull)">[ SYSTEM ]</span>
+<span class="mono" style="font-size:clamp(12px,1.4vw,15px);line-height:1.5">You have met the conditions to become a Player.<br>Will you accept?</span>
+<span class="mono" style="align-self:center;margin-top:2px;padding:6px 18px;border:1px solid var(--pull);font-size:12px;font-weight:700;letter-spacing:3px;color:var(--pull)">[ ACCEPT ]</span>
+</div>
+<div class="caption">Day 1. Everyone starts somewhere.</div>
+</figure>
+<div class="stack" style="flex:999 1 420px;min-width:0;gap:28px">
+<div class="stack" style="gap:16px">
+<p class="tag">[ 01 · AWAKENING ]</p>
+<h2 class="h2">Day one,<br>the System measures you.</h2>
+<p class="lead">No questionnaire. Three tests show what your body can do today. Then you get your rank, your class and your first quest.</p>
+</div>
+<ol class="tests stack" style="margin:0;padding:0;list-style:none;gap:8px">
+<li class="card rv"><span class="lbl">TEST 1</span><span style="font-size:16px;font-weight:600">Max pull-ups</span><span class="mono" style="color:var(--pull)">12</span></li>
+<li class="card rv"><span class="lbl">TEST 2</span><span style="font-size:16px;font-weight:600">Max dips or push-ups</span><span class="mono" style="color:var(--pull)">18</span></li>
+<li class="card rv"><span class="lbl">TEST 3</span><span style="font-size:16px;font-weight:600">5 km time <span class="muted" style="font-weight:400">· optional</span></span><span class="mono" style="color:var(--pull)">27:40</span></li>
+</ol>
+<div class="win row rv" style="padding:22px 24px;align-items:center;gap:20px 32px">
+<i class="br tl"></i><i class="br bc"></i>
+<div class="stack" style="align-items:center;gap:2px"><span class="lbl" style="font-size:10px">INITIAL RANK</span><span class="mono" style="font-size:64px;line-height:1;font-weight:800;color:var(--pull)">D</span></div>
+<div class="stack" style="flex:1 1 200px;gap:6px">
+<span class="mono" style="font-size:11px;letter-spacing:3px;color:var(--pull)">[ MEASUREMENT COMPLETE ]</span>
+<span style="font-size:15px">Class <strong>Striker</strong> · strongest in pulling power</span>
+<span style="font-size:14px" class="muted">First quest: 3 × 6 pull-ups, then rest 2 minutes</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 02 FEATURES -->
+<section id="features" style="background:var(--bg2)">
+<div class="wrap sec stack" style="gap:40px">
+<div class="stack" style="gap:16px;max-width:720px">
+<p class="tag">[ 02 · EVERY SCREEN ANSWERS ONE QUESTION ]</p>
+<h2 class="h2">What should I do now?</h2>
+</div>
+<div class="feat">
+<article class="card rv"><span class="lbl" style="color:var(--pull)">◇ TRAIN</span><h3>Your next set is already filled in</h3><p class="d">Gym, calisthenics, GPS runs against your ghost, Zone 2. Weights go up when you've earned it.</p></article>
+<article class="card rv"><span class="lbl" style="color:var(--pull)">◇ FUEL</span><h3>A calorie target that learns</h3><p class="d">Calories, protein, water. Corrected by your band and your scale. Log by search, barcode or photo.</p></article>
+<article class="card rv"><span class="lbl" style="color:var(--pull)">◇ STATUS</span><h3>Heavy day or recovery day</h3><p class="d">Sleep, resting heart rate and HRV decide today's readiness, and it says when the data is thin.</p></article>
+<article class="card rv"><span class="lbl" style="color:var(--dip)">◇ GROW</span><h3>Focus time trains your INT</h3><p class="d">Study blocks, exam countdowns and long-term goals. Your brain levels up next to your body.</p></article>
+</div>
+</div>
+</section>
+
+<!-- 03 INSIDE A WORKOUT -->
+<section id="inside">
+<div class="wrap sec stack" style="gap:40px">
+<div class="stack" style="gap:16px;max-width:720px">
+<p class="tag">[ 03 · INSIDE A WORKOUT ]</p>
+<h2 class="h2">You lift. The System does the maths.</h2>
+<p class="lead">Try it: log the sets of a real Pull Day block.</p>
+</div>
+<div class="row" style="gap:20px;align-items:stretch">
+<div class="win stack rv" id="logger" style="flex:1 1 380px;min-width:0;padding:24px;gap:16px">
+<i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br bc"></i>
+<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span class="lbl">PULL DAY · BLOCK 1/5</span><span class="lbl" style="color:var(--gold)" id="lg-xp">+0 STR XP</span></div>
+<span style="font-size:22px;font-weight:700">Weighted pull-ups</span>
+<div class="stack" id="lg-active" style="gap:16px">
+<div class="stack" style="gap:6px" aria-live="polite">
+<span class="mono" style="font-size:12px;letter-spacing:3px;color:var(--pull)" id="lg-head">SET 1 OF 5 · WARM-UP</span>
+<span class="mono" style="font-size:clamp(44px,6vw,64px);line-height:1;font-weight:700" id="lg-now">+10 kg × 5</span>
+<span style="font-size:13px" class="muted">Last time: +22,5 kg × 5 · RPE 8 → the System added 2,5 kg</span>
+</div>
+<button type="button" class="btn" id="lg-log" style="min-height:64px;font-size:17px">LOG SET</button>
+</div>
+<div id="lg-done" role="status" hidden style="padding:18px;border:1px solid var(--gold);border-radius:4px;flex-direction:column;gap:6px;box-shadow:0 0 26px rgba(242,193,78,.18)">
+<span class="mono" style="font-size:12px;letter-spacing:3px;color:var(--gold);display:block">[ BLOCK CLEARED ]</span>
+<span style="font-size:17px;font-weight:600;display:block;margin-top:6px">All top sets hit at RPE 8.</span>
+<span style="font-size:14px;display:block;margin-top:6px" class="muted">Next Pull Day: +27,5 kg × 5. Rest 2:30, then front lever.</span>
+</div>
+<div class="stack" id="lg-rows" style="gap:6px"></div>
+<button type="button" class="ghost" id="lg-undo" hidden>↶ Undo</button>
+</div>
+<div class="card stack m-hide rv" style="flex:1 1 340px;min-width:0;padding:24px;gap:18px">
+<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><span class="lbl" style="color:var(--dip)">◇ SKILL TREE</span><span class="lbl">STEP 3 OF 5</span></div>
+<span style="font-size:22px;font-weight:700">Front lever</span>
+<ol class="path stack" role="img" aria-label="Front lever path: tuck done, advanced tuck done, one-leg in progress at 8 of 12 seconds, straddle and full locked" style="margin:0;padding:0;list-style:none">
+<li><span class="dot" style="border:2px solid var(--rest);color:var(--rest)">✓</span><span>Tuck</span><span class="mono" style="font-size:12px;color:var(--rest)">15 s</span></li>
+<li aria-hidden="true" class="link" style="background:var(--rest);display:block;min-height:0"></li>
+<li><span class="dot" style="border:2px solid var(--rest);color:var(--rest)">✓</span><span>Advanced tuck</span><span class="mono" style="font-size:12px;color:var(--rest)">10 s</span></li>
+<li aria-hidden="true" class="link" style="background:var(--dip);display:block;min-height:0"></li>
+<li><span class="dot pulse" style="border:2px solid var(--dip);color:var(--dip);box-shadow:0 0 14px rgba(157,123,255,.5)">▶</span><div class="stack" style="gap:6px"><span style="font-weight:600">One-leg</span><div class="meter"><i style="width:66%;background:var(--dip)"></i></div></div><span class="mono" style="font-size:12px;color:var(--dip)">8 / 12 s</span></li>
+<li aria-hidden="true" class="link" style="width:0;border-left:2px dashed var(--edge);display:block;min-height:0"></li>
+<li><span class="dot" style="border:2px dashed var(--edge);color:var(--muted)">◇</span><span class="muted">Straddle</span><span style="font-size:12px" class="muted">needs +25 kg × 5 pull-up</span></li>
+<li aria-hidden="true" class="link" style="width:0;border-left:2px dashed var(--edge);display:block;min-height:0"></li>
+<li><span class="dot" style="border:2px dashed var(--edge);color:var(--muted)">◇</span><span class="muted">Full front lever</span><span class="mono" style="font-size:12px;color:var(--gold)">BOSS</span></li>
+</ol>
+<p style="margin:0;font-size:13px;line-height:1.5" class="muted">Requirements prove themselves from your log. Hold a step long enough and the next one opens.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 04 LIFE HAPPENS -->
+<section id="fair" style="background:var(--bg2)">
+<div class="wrap sec stack" style="gap:52px;padding-top:128px;padding-bottom:128px">
+<div class="stack" style="gap:18px;max-width:860px">
+<p class="tag" style="color:var(--rest)">[ 04 · THE VEILRISE RULE ]</p>
+<h2 style="font-size:clamp(40px,6.4vw,84px);line-height:1;font-weight:800;letter-spacing:-2px">Life happens.<br><span style="color:var(--rest)">The System knows.</span></h2>
+<p style="margin:0;max-width:640px;font-size:clamp(18px,1.8vw,21px);line-height:1.55;color:var(--soft)">Most streak apps are built to make you feel guilty. Then you get sick, the number resets, and the motivation goes with it. In Veilrise, your streak survives the flu.</p>
+</div>
+<div class="row" style="gap:20px;align-items:stretch">
+<div class="card stack rv" style="flex:1 1 300px;min-width:0;padding:28px;gap:18px">
+<span class="lbl">A TYPICAL STREAK APP</span>
+<div class="stack" style="gap:4px"><span class="big muted" style="text-decoration:line-through;text-decoration-color:var(--warn);text-decoration-thickness:4px">293</span><span class="lbl" style="font-size:12px">DAY STREAK</span></div>
+<div class="stack" style="gap:8px;font-size:15px"><span class="muted">Day 294 · flu, 3 days in bed</span><span class="mono" style="font-weight:700;color:var(--warn)">× STREAK LOST · 0 DAYS</span></div>
+</div>
+<div class="win stack rv" style="--c:var(--rest);flex:1.3 1 360px;min-width:0;padding:28px;gap:18px;background:linear-gradient(#0f1a1a,#0b1118);border-color:#1f4a3e;box-shadow:0 0 40px rgba(75,227,176,.08)">
+<i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br bc"></i>
+<span class="lbl" style="color:var(--rest)">VEILRISE · SAME WEEK</span>
+<div class="week" role="img" aria-label="Week: Monday and Tuesday done, Wednesday to Friday in ill mode and protected, Saturday and Sunday done">
+<div>MON<span style="color:var(--rest)">✓</span></div><div>TUE<span style="color:var(--rest)">✓</span></div>
+<div class="ill">WED<span class="mono" style="font-size:10px">ILL</span></div><div class="ill">THU<span class="mono" style="font-size:10px">ILL</span></div><div class="ill">FRI<span class="mono" style="font-size:10px">ILL</span></div>
+<div>SAT<span style="color:var(--rest)">✓</span></div><div>SUN<span style="color:var(--rest)">✓</span></div>
+</div>
+<div class="row" style="align-items:baseline;justify-content:space-between;gap:8px 20px">
+<div class="stack" style="gap:4px"><span class="big" style="color:var(--rest)">297</span><span class="lbl" style="font-size:12px;color:var(--rest)">DAY STREAK · INTACT ✓</span></div>
+<span style="font-size:14px;color:var(--soft)">Ill mode protected 3 days. Only sleep and water counted.</span>
+</div>
+</div>
+</div>
+<div class="feat">
+<article class="card rv"><span class="lbl" style="color:var(--rest)">1 · LIFE MODES</span><h3>Ill, exams, travel, injured</h3><p class="d">Switch the mode and every day it covers is protected. Training advice steps back until you say you're back.</p></article>
+<article class="card rv"><span class="lbl" style="color:var(--rest)">2 · HONEST MISSES</span><h3>Skip it and say why</h3><p class="d">No time, no gym, chose rest. Log it honestly and your streak waits instead of breaking. Up to twice a week.</p></article>
+<article class="card rv"><span class="lbl" style="color:var(--gold)">3 · COMEBACK DUNGEON</span><h3>Missed a day? Fight back</h3><p class="d">Clear a short comeback quest the same day and your streak returns, with XP on top.</p></article>
+</div>
+</div>
+</section>
+
+<!-- 05 BOSS -->
+<section id="boss" class="boss">
+<div class="wrap sec row" style="align-items:center;gap:48px 64px;padding-top:128px;padding-bottom:128px">
+<figure class="rv" role="img" aria-label="Illustration of a towering armoured boss in silhouette with horns, spiked shoulders and glowing red eyes" style="margin:0;flex:1 1 320px;max-width:480px;position:relative;aspect-ratio:400/460">
+<svg viewBox="0 0 400 460" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible">
+<defs>
+<radialGradient id="bg1" cx="50%" cy="42%" r="50%"><stop offset="0%" stop-color="#ff4d6d" stop-opacity=".55"/><stop offset="60%" stop-color="#ff4d6d" stop-opacity=".08"/><stop offset="100%" stop-color="#ff4d6d" stop-opacity="0"/></radialGradient>
+<filter id="rg" x="-200%" y="-300%" width="500%" height="700%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="sm" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+</defs>
+<circle class="pulse" cx="200" cy="190" r="200" fill="url(#bg1)"/>
+<path d="M200 54 L172 104 L118 52 L136 132 L150 168 C108 180 62 204 44 262 L18 460 L382 460 L356 262 C338 204 292 180 250 168 L264 132 L282 52 L228 104 Z" fill="#030203"/>
+<polygon points="66,226 10,176 92,206" fill="#030203"/><polygon points="334,226 390,176 308,206" fill="#030203"/>
+<polygon points="96,214 70,150 118,198" fill="#030203"/><polygon points="304,214 330,150 282,198" fill="#030203"/>
+<path d="M200 54 L172 104 L118 52 L136 132 L150 168 C108 180 62 204 44 262 L18 460 M382 460 L356 262 C338 204 292 180 250 168 L264 132 L282 52 L228 104 L200 54" fill="none" stroke="#ff4d6d" stroke-width="1.4" stroke-opacity=".55"/>
+<path d="M160 168 L200 196 L240 168" fill="none" stroke="#ff4d6d" stroke-opacity=".35"/>
+<path d="M200 196 L200 330" fill="none" stroke="#ff4d6d" stroke-opacity=".25"/>
+<g filter="url(#rg)"><polygon points="166,136 194,144 190,151 170,147" fill="#ff2347"/><polygon points="206,144 234,136 230,147 210,151" fill="#ff2347"/></g>
+<polygon points="166,136 194,144 190,151 170,147" fill="#ffd1d9"/><polygon points="206,144 234,136 230,147 210,151" fill="#ffd1d9"/>
+<g filter="url(#sm)" opacity=".7"><ellipse cx="90" cy="440" rx="120" ry="28" fill="#1e0a0f"/><ellipse cx="310" cy="446" rx="130" ry="26" fill="#1e0a0f"/></g>
+</svg>
+</figure>
+<div class="stack" style="flex:999 1 420px;min-width:0;gap:24px">
+<p class="tag" style="color:var(--warn)">[ 05 · WEEKLY BOSS ] ! ENCOUNTER</p>
+<div class="stack" style="gap:6px">
+<h2 class="mono" style="font-size:clamp(44px,6.4vw,84px);line-height:1;font-weight:800;letter-spacing:4px">THE BARON</h2>
+<p class="mono" style="margin:0;font-size:clamp(16px,1.8vw,22px);font-weight:700;letter-spacing:2px;color:var(--gold)">WEIGHTED PULL-UP +40 KG × 5</p>
+</div>
+<div class="win stack rv" style="--c:var(--warn);padding:22px 24px;gap:14px;background:rgba(11,6,9,.85);border-color:#4a1a24">
+<i class="br tl"></i><i class="br bc"></i>
+<div class="mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:12px;letter-spacing:2px"><span class="muted">DAMAGE DEALT</span><span style="color:var(--gold)">80 % · BOSS HP 20 %</span></div>
+<div class="hp" role="img" aria-label="Damage dealt 80 percent"><span style="color:var(--gold);text-shadow:0 0 14px rgba(242,193,78,.55)">████████</span><span style="color:#3a2228">░░</span></div>
+<ul class="mono stack" style="margin:0;padding:0;list-style:none;gap:8px;font-size:13px">
+<li style="display:flex;justify-content:space-between;gap:12px"><span class="muted">HIT · WEEK 1</span><span>+30 kg × 5 ✓</span></li>
+<li style="display:flex;justify-content:space-between;gap:12px"><span class="muted">HIT · WEEK 3</span><span>+35 kg × 5 ✓</span></li>
+<li style="display:flex;justify-content:space-between;gap:12px"><span class="muted">HIT · WEEK 5</span><span>+37,5 kg × 5 ✓</span></li>
+<li style="display:flex;justify-content:space-between;gap:12px;color:var(--gold)"><span>NEXT</span><span>+40 kg × 5 · FINISH IT</span></li>
+</ul>
+</div>
+<p style="margin:0;font-size:16px;line-height:1.6;color:var(--soft)">Bosses are built from your own numbers, so the target is always just out of reach. Every set you log deals damage. Beat it and the XP pays out once, for good.</p>
+</div>
+</div>
+</section>
+
+<!-- 06 ASCENSION -->
+<section id="ascension" class="asc">
+<div class="wrap sec stack" style="gap:56px;padding-top:128px;padding-bottom:128px">
+<div class="row" style="align-items:center;gap:48px 64px">
+<div class="stack rv" style="flex:999 1 420px;min-width:0;align-items:center;text-align:center;gap:12px">
+<p class="mono" style="margin:0;font-size:clamp(11px,1.2vw,13px);letter-spacing:4px;color:var(--gold)">[ ASCENSION TRIAL COMPLETE ]</p>
+<div class="S" role="img" aria-label="Rank S">S</div>
+<p class="mono" style="margin:0;font-size:clamp(16px,2vw,22px);font-weight:700;letter-spacing:6px"><span style="color:var(--pull)">A</span> <span class="muted">→</span> <span style="color:var(--gold)">S</span></p>
+<div class="ladder" role="img" aria-label="Rank ladder E, D, C, B, A, S" style="margin-top:18px">
+<span style="animation-delay:0s">E</span><span style="animation-delay:.15s">D</span><span style="animation-delay:.3s">C</span><span style="animation-delay:.45s">B</span><span style="animation-delay:.6s">A</span><span class="s" style="animation-delay:.8s">S</span>
+</div>
+</div>
+<div class="win stack rv" style="flex:1 1 320px;min-width:0;max-width:440px;margin:0 auto;padding:26px;gap:18px;background:linear-gradient(160deg,#0f1822 0%,#0b1118 55%,#17140b 100%);border-color:#5a4a22;box-shadow:0 0 60px rgba(242,193,78,.12)">
+<i class="br tl" style="width:18px;height:18px"></i><i class="br tr" style="width:18px;height:18px;border-color:var(--gold)"></i><i class="br bl" style="width:18px;height:18px"></i><i class="br bc" style="width:18px;height:18px;border-color:var(--gold)"></i>
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+<div class="stack" style="gap:4px"><span class="lbl" style="letter-spacing:3px">PLAYER CARD</span><span style="font-size:22px;font-weight:700">You, 14 months in</span><span style="font-size:14px" class="muted">LV. 41 · Class Vanguard</span></div>
+<span class="mono" style="width:64px;height:64px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;border:2px solid var(--gold);border-radius:4px;font-size:36px;font-weight:800;color:var(--gold);box-shadow:0 0 24px rgba(242,193,78,.35)">S</span>
+</div>
+<div class="stack" style="gap:10px">
+<span class="lbl" style="color:var(--gold)">TRIAL · 14 DAYS · 4 OF 5 NEEDED</span>
+<div class="chk"><span>Stat average at S level</span><span style="color:var(--rest)">✓</span></div>
+<div class="chk"><span>Strength or power trial</span><span style="color:var(--rest)">✓</span></div>
+<div class="chk"><span>Endurance, agility or vitality</span><span style="color:var(--rest)">✓</span></div>
+<div class="chk"><span>Skill or intellect trial</span><span style="color:var(--rest)">✓</span></div>
+<div class="chk muted"><span>6 training days</span><span>5/6 ×</span></div>
+</div>
+<p class="mono" style="margin:0;padding-top:14px;border-top:1px solid var(--line);font-size:12px;letter-spacing:2px;color:var(--gold)">RANK EARNED. IT NEVER DROPS.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy" style="background:var(--bg2)">
+<div class="wrap row" style="gap:32px 64px;align-items:flex-start;padding-top:96px;padding-bottom:96px">
+<div class="stack" style="flex:1 1 320px;min-width:0;gap:14px">
+<p class="tag">[ YOUR DATA ]</p>
+<h2 style="font-size:clamp(30px,3.6vw,44px);line-height:1.1;font-weight:800;letter-spacing:-1px">It stays on your phone.</h2>
+<a href="privacy.html" class="mono" style="font-size:13px;letter-spacing:2px;padding:14px 0;text-decoration:none">READ THE PRIVACY POLICY ›</a>
+</div>
+<ul class="priv" style="flex:999 1 500px;min-width:0;margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px">
+<li class="card stack" style="padding:18px 20px;gap:6px"><span style="font-weight:600"><span style="color:var(--rest)">✓</span> No account</span><span class="d muted" style="font-size:14px">Open the app and start.</span></li>
+<li class="card stack" style="padding:18px 20px;gap:6px"><span style="font-weight:600"><span style="color:var(--rest)">✓</span> No ads, no tracking</span><span class="d muted" style="font-size:14px">No analytics, nothing sold.</span></li>
+<li class="card stack" style="padding:18px 20px;gap:6px"><span style="font-weight:600"><span style="color:var(--rest)">✓</span> Health data stays local</span><span class="d muted" style="font-size:14px">Read and used on your device only.</span></li>
+<li class="card stack" style="padding:18px 20px;gap:6px"><span style="font-weight:600"><span style="color:var(--rest)">✓</span> AI asks first</span><span class="d muted" style="font-size:14px">Optional, only the meal text you type.</span></li>
+</ul>
+</div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="join" class="grid-bg">
+<div class="wrap sec" style="max-width:860px">
+<div class="win stack rv" style="padding:clamp(28px,5vw,64px);align-items:center;text-align:center;gap:20px;box-shadow:0 0 80px rgba(82,217,255,.10)">
+<i class="br tl" style="width:22px;height:22px"></i><i class="br tr" style="width:22px;height:22px"></i><i class="br bl" style="width:22px;height:22px"></i><i class="br bc" style="width:22px;height:22px"></i>
+<p class="tag">[ AWAKENING PENDING ]<span class="blink" aria-hidden="true">_</span></p>
+<span aria-hidden="true" class="mono pulse" style="font-size:clamp(88px,14vw,140px);line-height:1;font-weight:800;color:var(--pull);text-shadow:0 0 40px rgba(82,217,255,.45)">?</span>
+<h2 class="h2">What rank are you?</h2>
+<p style="margin:0;max-width:540px;font-size:17px;line-height:1.6;color:var(--soft)">On launch day the Awakening test gives you your starting rank, your class and your first quest. Everyone on the waitlist gets the <strong style="color:var(--gold)">Founder badge</strong> in the app.</p>
+<div data-wl="bottom" style="width:100%;display:flex;justify-content:center;text-align:left"></div>
+</div>
+</div>
+</section>
 </main>
+
+<footer class="foot wrap row" style="justify-content:space-between;gap:24px;padding-top:44px;padding-bottom:52px">
+<div class="stack" style="gap:8px">
+<span class="mono" style="font-weight:800;font-size:15px;letter-spacing:5px"><span style="color:var(--pull)">◇</span> VEILRISE</span>
+<span style="font-size:13px" class="muted">© 2026 Veilrise · Made in Austria</span>
+<span style="font-size:12px;max-width:420px" class="muted">A fitness and self-improvement app, not a medical device. Not affiliated with any game, series or publisher.</span>
+</div>
+<nav aria-label="Legal" class="row" style="gap:4px 28px;align-items:flex-start">
+<a href="privacy.html" style="font-size:14px;color:var(--muted);padding:14px 0">Privacy</a>
+<a href="terms.html" style="font-size:14px;color:var(--muted);padding:14px 0">Terms</a>
+<a href="imprint.html" style="font-size:14px;color:var(--muted);padding:14px 0">Impressum</a>
+<a href="support.html" style="font-size:14px;color:var(--muted);padding:14px 0">Support</a>
+</nav>
+</footer>
+
+<div class="sticky" id="sticky" aria-hidden="true"><a class="btn" href="#join" tabindex="-1">CLAIM MY AWAKENING</a></div>
+
+<template id="wl-tpl">
+<form class="wl" novalidate>
+<span class="founder">◆ FOUNDER BADGE INCLUDED</span>
+<label class="lbl">RESERVE YOUR AWAKENING · EMAIL</label>
+<div class="f">
+<input type="email" name="EMAIL" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+<button type="submit" class="btn">CLAIM MY AWAKENING</button>
+</div>
+<input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px">
+<p class="err" role="alert" hidden>! Enter a valid email address.</p>
+<p class="fine">Android first · iPhone later · 16+ · No ads, no subscriptions. You confirm by email, then one message at launch. <a href="privacy.html#en">Privacy</a></p>
+</form>
+<div class="done" role="status" hidden>
+<p class="t">✓ [ CHECK YOUR INBOX ]</p>
+<p>Tap the link in the confirmation email to lock in your Awakening and the Founder badge.</p>
+<p class="muted" style="font-size:14px">Know someone who'd want to know their rank?</p>
+<button type="button" class="ghost share">⇪ Send them the link</button>
+</div>
+</template>
+
+<script>
+(function(){
+/* ===== CONFIG =====
+   BREVO_URL: the "action" URL of your Brevo subscription form
+   (Brevo → Contacts → Forms → your form → Share → HTML code → <form action="…">).
+   While it is empty, sign-ups open an email to the address below instead. */
+var BREVO_URL = "";
+var FALLBACK_EMAIL = "veilrise.app@gmail.com";
+var SITE = "https://rustamur-it.github.io/";
+
+document.documentElement.classList.add("js");
+var params = new URLSearchParams(location.search);
+var source = (params.get("s") || params.get("utm_source") || "direct").replace(/[^a-z0-9_-]/gi,"").slice(0,24) || "direct";
+
+/* waitlist forms */
+var tpl = document.getElementById("wl-tpl");
+var mounts = document.querySelectorAll("[data-wl]");
+var joined = false;
+try { joined = localStorage.getItem("vr_joined") === "1"; } catch(e) {}
+var forms = [];
+mounts.forEach(function(m){
+  m.appendChild(tpl.content.cloneNode(true));
+  var form = m.querySelector("form"), done = m.querySelector(".done"), input = form.querySelector("input[type=email]");
+  var id = "email-" + m.getAttribute("data-wl");
+  input.id = id; form.querySelector("label").setAttribute("for", id);
+  forms.push({form:form, done:done});
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var err = form.querySelector(".err");
+    var email = input.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { err.hidden = false; input.focus(); return; }
+    err.hidden = true;
+    if (form.email_address_check.value) return; /* bot */
+    var btn = form.querySelector("button"); btn.disabled = true; btn.textContent = "REGISTERING…";
+    var finish = function(){ try{localStorage.setItem("vr_joined","1");}catch(e){} showDone(); };
+    if (!BREVO_URL) {
+      location.href = "mailto:" + FALLBACK_EMAIL + "?subject=" + encodeURIComponent("Veilrise waitlist") +
+        "&body=" + encodeURIComponent("Please add me to the Veilrise waitlist: " + email + "\nSource: " + source);
+      setTimeout(finish, 600); return;
+    }
+    var fd = new FormData();
+    fd.append("EMAIL", email); fd.append("SOURCE", source);
+    fd.append("email_address_check", ""); fd.append("locale", "en");
+    fetch(BREVO_URL, {method:"POST", mode:"no-cors", body:fd}).then(finish, function(){
+      btn.disabled = false; btn.textContent = "CLAIM MY AWAKENING";
+      err.textContent = "! Couldn't reach the server. Check your connection and try again."; err.hidden = false;
+    });
+  });
+  done.querySelector(".share").addEventListener("click", function(){
+    var data = {title:"Veilrise", text:"What rank are you? Veilrise turns training into a game.", url: SITE + "?s=friend"};
+    if (navigator.share) { navigator.share(data).catch(function(){}); }
+    else if (navigator.clipboard) { navigator.clipboard.writeText(data.url).then(function(){ done.querySelector(".share").textContent = "✓ Link copied"; }); }
+  });
+});
+function showDone(){ forms.forEach(function(f){ f.form.hidden = true; f.done.hidden = false; }); }
+if (joined) showDone();
+
+/* reveal on scroll */
+var rv = document.querySelectorAll(".rv");
+if ("IntersectionObserver" in window) {
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add("on"); io.unobserve(e.target); } }); }, {threshold:.18, rootMargin:"0px 0px -6% 0px"});
+  rv.forEach(function(el){ io.observe(el); });
+} else { rv.forEach(function(el){ el.classList.add("on"); }); }
+
+/* sticky CTA on phones */
+var sticky = document.getElementById("sticky"), hero = document.getElementById("top"), join = document.getElementById("join");
+if ("IntersectionObserver" in window) {
+  var heroOut = false, joinIn = false;
+  var upd = function(){ var s = heroOut && !joinIn; sticky.classList.toggle("show", s); sticky.setAttribute("aria-hidden", s ? "false" : "true"); sticky.querySelector("a").tabIndex = s ? 0 : -1; };
+  new IntersectionObserver(function(es){ heroOut = !es[0].isIntersecting; upd(); }).observe(hero);
+  new IntersectionObserver(function(es){ joinIn = es[0].isIntersecting; upd(); }).observe(join);
+}
+
+/* workout logger */
+var sets = [["+10",5,"WARM-UP"],["+20",5,"WARM-UP"],["+25",5,"TOP SET"],["+25",5,"TOP SET"],["+25",5,"TOP SET"]];
+var n = 0, $ = function(id){ return document.getElementById(id); };
+function render(){
+  var rows = sets.map(function(s,i){
+    var cls = i < n ? "d" : i === n ? "n" : "", mark = i < n ? "✓" : i === n ? "▶" : "◇";
+    return '<div class="setrow ' + cls + '"><span>' + mark + " " + s[2] + "</span><span>" + s[0] + " kg × " + s[1] + "</span></div>";
+  }).join("");
+  $("lg-rows").innerHTML = rows;
+  var over = n >= sets.length;
+  $("lg-active").hidden = over; $("lg-done").hidden = !over;
+  if (!over) { $("lg-head").textContent = "SET " + (n+1) + " OF 5 · " + sets[n][2]; $("lg-now").textContent = sets[n][0] + " kg × " + sets[n][1]; }
+  $("lg-xp").textContent = "+" + (n*2 + (over ? 15 : 0)) + " STR XP";
+  $("lg-undo").hidden = n === 0;
+}
+$("lg-log").addEventListener("click", function(){ if (n < sets.length) { n++; render(); if (n >= sets.length) $("lg-undo").focus(); } });
+$("lg-undo").addEventListener("click", function(){ if (n > 0) { n--; render(); } });
+render();
+})();
+</script>
 </body>
 </html>
