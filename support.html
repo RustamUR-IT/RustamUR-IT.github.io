@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Support · Veilrise</title>
+<meta name="description" content="Help for Veilrise: contact, feedback and answers to common questions.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<style>
+.legal details{border:1px solid var(--line);border-radius:8px;background:var(--panel);margin:8px 0}
+.legal summary{cursor:pointer;min-height:52px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-size:16px;font-weight:600;list-style:none}
+.legal summary::-webkit-details-marker{display:none}
+.legal summary:before{content:"›";color:var(--ice);font-family:ui-monospace,monospace;transition:transform .2s}
+.legal details[open] summary:before{transform:rotate(90deg)}
+.legal details p{margin:0;padding:0 18px 16px 40px;color:var(--muted)}
+.contact{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 8px}
+.contact .card{flex:1 1 260px}
+</style>
+</head>
+<body class="legal">
+<main>
+<nav><a href="index.html">Veilrise</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="imprint.html">Imprint</a></nav>
+<h1>SUPPORT</h1>
+<p class="muted">Stuck? Most answers are below. If yours isn't, write to us. A real person reads every message.</p>
+
+<div class="contact">
+<div class="card">
+<p class="sys" style="text-align:left">[ EMAIL ]</p>
+<p style="margin:6px 0 0">Replies within 3 working days, in English or German.</p>
+<a class="btn" href="mailto:veilrise.app@gmail.com?subject=Veilrise%20support">veilrise.app@gmail.com</a>
+</div>
+<div class="card">
+<p class="sys" style="text-align:left">[ FROM THE APP ]</p>
+<p style="margin:6px 0 0">Settings → ✉ Send feedback. It adds your app version and phone model, nothing personal. After a crash the app offers to send the report.</p>
+</div>
+</div>
+
+<h2>Frequent questions</h2>
+<details><summary>Which phones does Veilrise run on?</summary><p>Android 8.0 or newer, plus a companion app for Wear OS watches. An iPhone version is in development.</p></details>
+<details><summary>Does it cost anything?</summary><p>No. There are no purchases, subscriptions or ads. If that ever changes, you'll see the terms before anything costs money.</p></details>
+<details><summary>Do I need a smartwatch or band?</summary><p>No. With a band, Veilrise reads sleep, heart rate and calories from Health Connect (for example via Zepp, Samsung Health or Fitbit) and readiness gets more accurate. Without one, everything else works and the app tells you when a number is an estimate.</p></details>
+<details><summary>My band shows different calories than the app</summary><p>Band apps often sync to Health Connect in batches. Tap “↻ Sync” on the FUEL screen to open your band app, then come back. Veilrise also counts only 75 % of band calories on purpose, and after a few weeks your scale trend corrects the target.</p></details>
+<details><summary>I was ill and my streak broke</summary><p>Turn on Ill mode from the daily quests card. It can be backdated to yesterday and protects every day it covers. Missed one day anyway? A Rift opens: one action the same day closes it and your streak returns.</p></details>
+<details><summary>How do I move to a new phone?</summary><p>Settings → Backup → Export backup (with a password if you like), copy the file to the new phone, then Restore from file. You can also turn on a daily automatic backup to a folder of your choice.</p></details>
+<details><summary>How do I delete my data?</summary><p>Settings → Data → Delete all data. That erases everything on the phone. Backup files you saved yourself and workouts written to Health Connect stay until you remove them there. To leave the waitlist, use the unsubscribe link in any email or write to us.</p></details>
+<details><summary>Is my health data uploaded anywhere?</summary><p>No. Health Connect data is read and used only on your phone. The <a href="privacy.html">privacy policy</a> lists the few optional features that send something, and exactly what.</p></details>
+
+<p class="muted" style="margin-top:32px">Veilrise is a fitness app, not medical advice. If something hurts or you feel unwell, stop and talk to a doctor.</p>
+</main>
+</body>
+</html>
