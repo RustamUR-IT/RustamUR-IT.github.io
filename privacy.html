@@ -12,7 +12,7 @@
 
 <section id="en">
 <h1>PRIVACY POLICY</h1>
-<p class="muted">Veilrise (Android app, Wear OS app and this website) · Effective 26 October 2026</p>
+<p class="muted">Veilrise (Android app, Wear OS app and this website) · Effective 28 October 2026</p>
 
 <h2>The short version</h2>
 <ul>
@@ -28,7 +28,7 @@
 <p>To work, the app saves the following in its private storage on your device. Other apps cannot read it.</p>
 <ul>
 <li><b>Profile:</b> name or nickname, sex (and which sex to use for calculations), age, height, body weight, goal, training paths, look of your avatar.</li>
-<li><b>Training:</b> sets, workouts, timer sessions, runs including GPS tracks, Zone 2 sessions with heart rate, records, skills, plans.</li>
+<li><b>Training:</b> sets, workouts, timer sessions, runs (distance, time and pace; no route is kept), Zone 2 sessions with heart rate, records, skills, plans.</li>
 <li><b>Body and food:</b> weight entries, body scan values, meals and food you log, water, optional physique photos and meal photos.</li>
 <li><b>Health and recovery:</b> values read from Health Connect (see below), sleep, readiness, notes.</li>
 <li><b>Game progress:</b> XP, levels, quests, streaks, bosses, seasons, your guild and your friends' hunter cards.</li>
@@ -52,7 +52,7 @@
 <h2>Permissions and why the app asks</h2>
 <ul>
 <li><b>Health Connect</b> (steps, distance, calories, sleep, heart rate, resting heart rate, HRV, exercise, weight, body fat, lean mass): readiness, recovery, calorie target and stats. Optionally <b>writes</b> your finished workouts to Health Connect if you switch that on.</li>
-<li><b>Location</b> (precise, only while a run is recording): distance, pace and the route of GPS runs. The app never reads your location in the background when no run is recording.</li>
+<li><b>Location</b> (precise, only while a run is recording): distance and pace of GPS runs. The route itself is not stored. If you use the Fog of War map, the phone keeps only which ≈150 m cells you ran through, on the phone only, never in backups or exports. The app never reads your location in the background when no run is recording.</li>
 <li><b>Bluetooth</b>: connecting a heart-rate chest strap or band. Scanning is not used to find your location.</li>
 <li><b>Calendar</b> (read and write, optional): the week planner reads only when you're busy (never titles or details) and can add your planned workouts to a calendar you choose.</li>
 <li><b>Notifications, foreground services, wake lock, vibration</b>: so the interval timer, rest timer, run and heart-rate session keep working with the screen off.</li>
@@ -80,7 +80,7 @@
 </ul>
 
 <h2>Security</h2>
-<p>Data is stored in the app's private storage, which Android protects. Connections to Open Food Facts and Gemini use HTTPS. Backups can be encrypted with a password. Health values are hidden on the lock screen by default.</p>
+<p>Data is stored in the app's private storage, which Android protects. Connections to Open Food Facts and Gemini use HTTPS. Backups can be encrypted with a password. By default the status notification carries no health values (only level, quests and streak), so none can appear on the lock screen; you can turn them on in Settings → Privacy. Typing your weight into the evening check-in needs the phone unlocked.</p>
 
 <h2>Your rights</h2>
 <p>Under the GDPR you have the right to access, correct, delete, restrict and port your data, and to object. Since we hold no personal data about you, most requests can be met directly in the app: export, edit or delete. For any question, write to the address above. You can also complain to the Austrian Data Protection Authority (<a href="https://www.dsb.gv.at">Datenschutzbehörde</a>, Barichgasse 40–42, 1030 Vienna) or to the authority where you live.</p>
@@ -93,7 +93,7 @@
 
 <section id="de" lang="de">
 <h1>DATENSCHUTZERKLÄRUNG</h1>
-<p class="muted">Veilrise (Android-App, Wear-OS-App und diese Website) · Gültig ab 26. Oktober 2026</p>
+<p class="muted">Veilrise (Android-App, Wear-OS-App und diese Website) · Gültig ab 28. Oktober 2026</p>
 
 <h2>Kurz gesagt</h2>
 <ul>
@@ -109,7 +109,7 @@
 <p>Damit sie funktioniert, speichert die App Folgendes in ihrem privaten Speicher auf deinem Gerät. Andere Apps können es nicht lesen.</p>
 <ul>
 <li><b>Profil:</b> Name oder Spitzname, Geschlecht (und welches für Berechnungen gilt), Alter, Größe, Körpergewicht, Ziel, Trainingswege, Aussehen deines Avatars.</li>
-<li><b>Training:</b> Sätze, Workouts, Timer-Einheiten, Läufe samt GPS-Strecke, Zone-2-Einheiten mit Puls, Rekorde, Skills, Pläne.</li>
+<li><b>Training:</b> Sätze, Workouts, Timer-Einheiten, Läufe (Distanz, Zeit und Tempo; keine Strecke), Zone-2-Einheiten mit Puls, Rekorde, Skills, Pläne.</li>
 <li><b>Körper und Ernährung:</b> Gewichtseinträge, Körperanalyse-Werte, Mahlzeiten und Lebensmittel, Wasser, optionale Physique-Fotos und Essensfotos.</li>
 <li><b>Gesundheit und Erholung:</b> Werte aus Health Connect (siehe unten), Schlaf, Bereitschaft, Notizen.</li>
 <li><b>Spielfortschritt:</b> XP, Level, Quests, Serien, Bosse, Seasons, deine Gilde und die Hunter-Karten deiner Freunde.</li>
@@ -121,7 +121,7 @@
 <table>
 <tr><th>Wann</th><th>Was an wen geht</th></tr>
 <tr><td>Du scannst oder tippst einen <b>Barcode</b></td><td>Die Barcode-Nummer geht an <a href="https://world.openfoodfacts.org/privacy">Open Food Facts</a> (eine gemeinnützige Lebensmitteldatenbank), um das Produkt nachzuschlagen. Wie bei jeder Internetanfrage sieht deren Server dabei auch deine IP-Adresse.</td></tr>
-<tr><td>Du nutzt <b>✦ Gemini</b> für eine Mahlzeit (optional, mit eigenem API-Schlüssel)</td><td>Der Text der Mahlzeit, den du getippt hast, und kurze Notizen aus deinen früheren Korrekturen gehen an die Gemini-API von Google. Das läuft über deinen eigenen Google-API-Schlüssel und <a href="https://ai.google.dev/gemini-api/terms">Googles Bedingungen</a>. Essensfotos werden nicht gesendet, sie werden auf dem Handy ausgewertet.</td></tr>
+<tr><td>Du nutzt <b>✦ Gemini</b> für eine Mahlzeit (optional, mit eigenem API-Schlüssel)</td><td>Der Text der Mahlzeit, den du getippt hast, und kurze Notizen aus deinen früheren Korrekturen gehen an die Gemini-API von Google. Das läuft über deinen eigenen Google-API-Schlüssel und <a href="https://ai.google.dev/gemini-api/terms">Googles Bedingungen</a>. Essensfotos werden nicht gesendet, sie werden auf dem Handy ausgewertet. Die App fragt vor der ersten Nutzung einmal nach deiner Einwilligung; du kannst sie unter Einstellungen → Datenschutz, KI &amp; Export widerrufen.</td></tr>
 <tr><td>Du <b>teilst</b> etwas: Hunter-Karte, Einladungslink, Workout-Bild, Code, Export oder Absturzbericht</td><td>Der Inhalt geht über das Teilen-Menü von Android dorthin, wohin du ihn schickst (z. B. WhatsApp oder Instagram). Eine Hunter-Karte enthält Namen, Level, Stats, Serie, Wochen-XP und deine Gilde. Beste Lifts nur, wenn du das einschaltest, und nie in öffentlichen Einladungslinks.</td></tr>
 <tr><td>Du schaltest das <b>automatische Backup</b> ein und wählst einen Ordner</td><td>Eine Backup-Datei wird in diesen Ordner geschrieben. Ist er synchronisiert (z. B. Google Drive), speichert sie dein Sync-Anbieter. Backups lassen sich mit einem Passwort schützen (AES-256-Verschlüsselung).</td></tr>
 <tr><td>Das <b>Android-Backup</b> ist in deinen Handy-Einstellungen an</td><td>Android kann App-Daten in dein Google-Konto kopieren. Das ist eine Funktion deines Handys, betrieben von Google, und du steuerst sie in den Android-Einstellungen. Physique-Fotos, das Backup-Passwort, der Gemini-Schlüssel, Fehlerberichte und Kalender-Einstellungen sind ausgenommen.</td></tr>
@@ -133,7 +133,7 @@
 <h2>Berechtigungen und wofür</h2>
 <ul>
 <li><b>Health Connect</b> (Schritte, Distanz, Kalorien, Schlaf, Puls, Ruhepuls, HRV, Training, Gewicht, Körperfett, fettfreie Masse): für Bereitschaft, Erholung, Kalorienziel und Stats. Auf Wunsch <b>schreibt</b> die App fertige Workouts in Health Connect.</li>
-<li><b>Standort</b> (genau, nur während ein Lauf aufgezeichnet wird): Distanz, Tempo und Strecke von GPS-Läufen. Ohne laufende Aufzeichnung liest die App den Standort nie im Hintergrund.</li>
+<li><b>Standort</b> (genau, nur während ein Lauf aufgezeichnet wird): Distanz und Tempo von GPS-Läufen. Die Strecke selbst wird nicht gespeichert. Wenn du die Fog-of-War-Karte nutzt, merkt sich das Handy nur, durch welche ≈150-m-Felder du gelaufen bist, nur auf dem Handy, nie in Backups oder Exporten. Ohne laufende Aufzeichnung liest die App den Standort nie im Hintergrund.</li>
 <li><b>Bluetooth</b>: zum Verbinden eines Brustgurts oder Pulsbands. Die Suche wird nicht zur Standortbestimmung verwendet.</li>
 <li><b>Kalender</b> (lesen und schreiben, optional): Der Wochenplaner liest nur, wann du belegt bist (nie Titel oder Details), und kann geplante Workouts in einen Kalender deiner Wahl eintragen.</li>
 <li><b>Benachrichtigungen, Vordergrunddienste, Wake Lock, Vibration</b>: damit Intervall-Timer, Pausen-Timer, Lauf und Puls-Einheit auch bei ausgeschaltetem Bildschirm weiterlaufen.</li>
@@ -161,7 +161,7 @@
 </ul>
 
 <h2>Sicherheit</h2>
-<p>Die Daten liegen im privaten App-Speicher, den Android schützt. Verbindungen zu Open Food Facts und Gemini laufen über HTTPS. Backups lassen sich mit Passwort verschlüsseln. Gesundheitswerte sind am Sperrbildschirm standardmäßig ausgeblendet.</p>
+<p>Die Daten liegen im privaten App-Speicher, den Android schützt. Verbindungen zu Open Food Facts und Gemini laufen über HTTPS. Backups lassen sich mit Passwort verschlüsseln. Standardmäßig enthält die Status-Benachrichtigung keine Gesundheitswerte (nur Level, Quests und Serie), daher kann keiner am Sperrbildschirm erscheinen; du kannst sie unter Einstellungen → Datenschutz einschalten. Das Gewicht im Abend-Check-in einzutippen geht nur bei entsperrtem Handy.</p>
 
 <h2>Deine Rechte</h2>
 <p>Nach der DSGVO hast du das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch. Da wir keine personenbezogenen Daten über dich haben, lassen sich die meisten Anliegen direkt in der App erledigen: exportieren, bearbeiten oder löschen. Bei Fragen schreib an die Adresse oben. Du kannst dich auch bei der österreichischen <a href="https://www.dsb.gv.at">Datenschutzbehörde</a> (Barichgasse 40–42, 1030 Wien) oder der Behörde an deinem Wohnort beschweren.</p>

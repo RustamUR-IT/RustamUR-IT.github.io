@@ -24,7 +24,12 @@
         <div><b id="streak">–</b>DAY STREAK</div>
       </div>
     </div>
-    <p id="none" class="note hide">This link has no hunter card in it. Ask your friend to send it again.</p>
+    <div id="seal" class="hide">
+      <p class="name" id="sname"></p>
+      <p class="meta" id="slabel"></p>
+      <p class="note">Beat it with your own logged set or GPS run in Veilrise. A claim from a friend, not verified.</p>
+    </div>
+    <p id="none" class="note hide">This link has no hunter card or seal in it. Ask your friend to send it again.</p>
 
     <a id="open" class="btn hide" href="#">OPEN IN THE APP</a>
     <button id="copy" class="btn ghost hide" type="button">Copy the code</button>
@@ -38,7 +43,7 @@
 (function () {
   var code = (location.hash || "").replace(/^#/, "");
   try { code = decodeURIComponent(code); } catch (e) {}
-  var m = code.match(/RT1:[A-Za-z0-9_-]{10,}/);
+  var m = code.match(/(RT1|VS1):[A-Za-z0-9_-]{10,}/);
   var $ = function (id) { return document.getElementById(id); };
   var show = function (id) { $(id).classList.remove("hide"); };
   if (/[?&]noapp\b/.test(location.search)) show("noapp");
@@ -60,7 +65,10 @@
   };
   show("copy");
 
-  // show who invited you (the card is zlib-deflated JSON in base64url)
+  var isSeal = code.indexOf("VS1:") === 0;
+  if (isSeal) { $("head").textContent = "BREAK MY SEAL"; document.title = "Seal challenge · Veilrise"; }
+
+  // show who sent it (the card / seal is zlib-deflated JSON in base64url)
   if (!window.DecompressionStream) return;
   var b64 = code.slice(4).replace(/-/g, "+").replace(/_/g, "/");
   while (b64.length % 4) b64 += "=";
@@ -69,6 +77,17 @@
   var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate"));
   new Response(stream).text().then(function (t) {
     var c = JSON.parse(t);
+    if (isSeal) {
+      // a seal: who locked it and what to beat (text only, never HTML)
+      var kg = (c.g | 0) / 100, v = c.r | 0, ex = String(c.e || "").replace(/[^a-z0-9_]/gi, "");
+      var what = c.k === "R" ? (ex === "run3k" ? "3 km" : "5 km") + " · " + Math.floor(v / 60) + ":" + ("0" + (v % 60)).slice(-2)
+        : ex.replace(/_/g, " ") + (kg > 0 ? " · " + kg.toLocaleString("de-DE") + " kg" : "") + (c.k === "H" ? " · " + v + " s" : " × " + v);
+      $("sname").textContent = "SEALED BY " + String(c.n || "a Riser").toUpperCase();
+      $("slabel").textContent = what.toUpperCase();
+      document.title = (c.n || "A Riser") + " sealed this · Veilrise";
+      show("seal");
+      return;
+    }
     var power = 0; for (var k in (c.s || {})) power += +c.s[k] || 0;
     $("name").textContent = String(c.n || "Hunter").toUpperCase();
     $("meta").textContent = "LV. " + (c.l | 0) + " · " + String(c.t || "").toUpperCase() + (c.d ? " · " + String(c.d).toUpperCase() : "");
